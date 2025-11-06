@@ -39,8 +39,31 @@ func AuthMiddleware() gin.HandlerFunc {
 
 func RBACMiddleware(requiredPermission string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// For simplicity, we'll implement basic role check
-		// In production, you'd check specific permissions from database
-		c.Next()
+		roleID, exists := c.Get("roleID")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Role not found in context"})
+			c.Abort()
+			return
+		}
+
+		// Role-based access: Admin (roleID: 1) has full access
+		// Users (roleID: 2) have limited access
+		if roleID.(uint) == 1 {
+			// Admin has access to everything
+			c.Next()
+			return
+		}
+
+		// For non-admin users, check specific permissions
+		// In a production system, you would check permissions from database
+		// For now, we allow basic read operations for all authenticated users
+		if requiredPermission == "read" {
+			c.Next()
+			return
+		}
+
+		// Deny access for write operations to non-admin users
+		c.JSON(http.StatusForbidden, gin.H{"error": "Insufficient permissions"})
+		c.Abort()
 	}
 }

@@ -22,7 +22,11 @@ docker-compose up -d
 
 echo ""
 echo "Waiting for database to be ready..."
-sleep 5
+until docker-compose exec -T postgres pg_isready -U postgres > /dev/null 2>&1; do
+    echo "Waiting for PostgreSQL..."
+    sleep 2
+done
+echo "Database is ready!"
 
 echo ""
 echo "Creating .env file from .env.example..."

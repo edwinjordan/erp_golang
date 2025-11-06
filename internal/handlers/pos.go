@@ -53,7 +53,10 @@ func CreateSale(c *gin.Context) {
 	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
-			tx.Rollback()
+			if err := tx.Rollback().Error; err != nil {
+				// Log the rollback error but continue with panic
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Transaction rollback failed after panic"})
+			}
 		}
 	}()
 

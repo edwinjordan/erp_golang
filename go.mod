@@ -1,6 +1,8 @@
 module github.com/edwinjordan/erp_golang
 
-go 1.24.9
+go 1.24.0
+
+toolchain go1.24.9
 
 require (
 	github.com/gin-gonic/gin v1.11.0
