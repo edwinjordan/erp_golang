@@ -72,14 +72,14 @@ type Product struct {
 }
 
 type Sale struct {
-	ID         uint           `gorm:"primaryKey" json:"id"`
-	UserID     uint           `json:"user_id"`
-	User       User           `gorm:"foreignKey:UserID" json:"user"`
-	Total      float64        `gorm:"not null" json:"total"`
-	SaleItems  []SaleItem     `gorm:"foreignKey:SaleID" json:"sale_items"`
-	CreatedAt  time.Time      `json:"created_at"`
-	UpdatedAt  time.Time      `json:"updated_at"`
-	DeletedAt  gorm.DeletedAt `gorm:"index" json:"-"`
+	ID        uint           `gorm:"primaryKey" json:"id"`
+	UserID    uint           `json:"user_id"`
+	User      User           `gorm:"foreignKey:UserID" json:"user"`
+	Total     float64        `gorm:"not null" json:"total"`
+	SaleItems []SaleItem     `gorm:"foreignKey:SaleID" json:"sale_items"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type SaleItem struct {

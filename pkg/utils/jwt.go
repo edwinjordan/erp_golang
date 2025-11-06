@@ -14,8 +14,8 @@ func InitJWT(secret string) {
 }
 
 type Claims struct {
-	UserID uint   `json:"user_id"`
-	RoleID uint   `json:"role_id"`
+	UserID uint `json:"user_id"`
+	RoleID uint `json:"role_id"`
 	jwt.RegisteredClaims
 }
 
